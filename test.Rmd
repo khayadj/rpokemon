@@ -1,0 +1,80 @@
+---
+title: "Etude statistique pokemon première génération"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Description
+
+Cette etude est réalisée sur des pokémons de première génération. Lors de cette étude nous avons analysés les données tirés d'un jeu de données trouvé sur Kaggle. Ce jeu fut complété via le site poképedia afin d'avoir un ensemble de données exploitable.
+
+La base de données comporte un ensemble de 6 tables:
+
+- une table contenant l'ensemble des pokémons
+- une table contenant le type de chaque pokemon 
+- une table donnant des informations sur l'évolution des pokémon
+- une table avec les dresseurs "majeurs" de cette génération
+- une table contenant les pokemon possédé par le joueur qui ne figurent pas dans son équipe
+- une table des équipes du joueur et des dresseurs "majeurs"
+
+Dans l'univers Pokémon les combats sont l'activité principal. Dans cet univers chaque créature possède un type ainsi qu'un nombre de de statistique bien définit cette étude vise à mettr en avant les pokémons les plus performents selon différents critères
+
+```{r,include=FALSE}
+pokemon <- read.csv2("pokemon.csv", h = T)
+type <- read.csv2("estType.csv", h = T)
+evolution <- read.csv2("evolueEn.csv", h = T)
+dresseur <- read.csv2("dresseur.csv", h = T)
+detientPokemon <- read.csv2("detientPokemon.csv", h = T)
+stockPokemon <- read.csv2("stockePokemon.csv", h = T)
+
+```
+
+nombre de pokémon :
+
+```{r,echo=FALSE}
+
+length(pokemon$id_pok)
+
+```
+
+type répertorié :
+
+```{r,echo=FALSE}
+unique(type$type_pok)
+```
+
+nombre de pokémon par type :
+
+```{r,echo=F}
+library("ggplot2")
+ggplot(type) +
+  aes(x = type_pok) +
+  geom_bar(fill = "#0C4C8A") +
+  labs(
+    x = "type",
+    y = "nb de Pokemon",
+    title = "nombre de pokémon par type"
+  ) +
+  theme_linedraw() +
+  theme(
+    plot.title = element_text(size = 16L,
+                              face = "bold",
+                              hjust = 0.5),
+    axis.title.y = element_text(face = "bold")
+  )
+```
+
+## étude des pokémon en fonction de leur PV
+
+Dans Pokémon chaque créature possède un nombre de Point de Vie (PV) bien définit une fois à 0 le pokémon est considéré comme KO est n'est plus utlisable 
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
